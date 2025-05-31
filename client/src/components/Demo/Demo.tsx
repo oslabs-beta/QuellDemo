@@ -6,14 +6,14 @@ import { HitMiss } from "../HitMiss/HitMiss";
 import { SuccessfulQuery, BadQuery } from "../Alert/Alert";
 import { Quellify, clearCache } from "../../quell-client/src/Quellify";
 import { Visualizer } from "../Visualizer/Visualizer";
-import { mutationMap } from '../../../../server/schema/schema';
+import { mutationMap } from "../../../../server/schema/schema";
 
 import React, {
   Dispatch,
   memo,
   SetStateAction,
   useState,
-  useEffect
+  useEffect,
 } from "react";
 
 import {
@@ -58,7 +58,9 @@ export const Demo = memo(() => {
   }
 
   // Handler function to toggle visualizer
-  function handleVisualizerToggle(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleVisualizerToggle(
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void {
     setIsVisualizer(event.target.checked);
   }
 
@@ -157,8 +159,8 @@ export const Demo = memo(() => {
   );
 });
 
-// QueryDemo Component that displays a demo query and allows users to submit queries. 
-// It takes various props for querying and visualizations, and utilizes the useEffect hook 
+// QueryDemo Component that displays a demo query and allows users to submit queries.
+// It takes various props for querying and visualizations, and utilizes the useEffect hook
 // for setting the query based on the selected query type.
 function QueryDemo({
   addErrorAlerts,
@@ -183,7 +185,6 @@ function QueryDemo({
   setElapsed,
   elapsed,
 }: QueryDemoProps) {
-
   // Use the useEffect hook to update the query when the selected query type changes
   useEffect(() => {
     setQuery(querySamples[selectedQuery]);
@@ -196,7 +197,7 @@ function QueryDemo({
   function submitClientQuery() {
     // Record the start time for measuring response time
     const startTime = new Date().getTime();
-    
+
     // Make a request to the server to clear any cached data
     fetch("/api/clearCache").then(() => console.log("Cleared Server Cache!"));
 
@@ -217,12 +218,12 @@ function QueryDemo({
         const queryType: string = selectedQuery;
         // Store the type of query executed
         addQueryTypes([...queryTypes, queryType]);
-         // Check if the response is an array and process accordingly
+        // Check if the response is an array and process accordingly
         if (Array.isArray(res)) {
           // Extract the first element of the response array and type cast it to an object.
           let responseObj = res[0] as Record<string, any>;
           if (responseObj && responseObj.hasOwnProperty("key")) {
-             // If response object has a property "key", delete it
+            // If response object has a property "key", delete it
             delete responseObj["key"];
           }
           // Stringify the response object in a formatted manner and store it.
@@ -318,7 +319,6 @@ function QueryDemo({
         };
         console.log("Error in fetch: ", error);
         addErrorAlerts((prev) => [...prev, error.log]);
-
       });
   }
 
@@ -332,8 +332,10 @@ function QueryDemo({
       <div>
         <QueryEditor selectedQuery={selectedQuery} setQuery={setQuery} />
       </div>
-      <h3 className="text-white text-center text-2xl">See your query results</h3>
-            <div className="max-h-30 border-1 border-white p-5">
+      <h3 className="text-white text-center text-2xl">
+        See your query results
+      </h3>
+      <div className="max-h-30 border-1 border-white p-5">
         <TextField
           id={styles.queryText}
           multiline={true}
@@ -342,8 +344,8 @@ function QueryDemo({
           rows="20"
           value={response}
           sx={{
-            '& .MuiInputBase-inputMultiline': {
-              padding: '16px', // adjust as needed
+            "& .MuiInputBase-inputMultiline": {
+              padding: "16px", // adjust as needed
             },
           }}
         ></TextField>
@@ -368,8 +370,10 @@ const DemoControls = ({
 }: DemoControls) => {
   return (
     <div className="min-w-full flex flex-col gap-5 text-white items-center">
-<h3 className="text-white text-center text-2xl">Select a query to test</h3>  
-    <QuerySelect
+      <h3 className="text-white text-center text-2xl">
+        Select a query to test
+      </h3>
+      <QuerySelect
         setQueryChoice={setQueryChoice}
         selectedQuery={selectedQuery}
       />
@@ -496,17 +500,23 @@ function QuerySelect({ setQueryChoice, selectedQuery }: BasicSelectProps) {
 
   return (
     <Box className="text-center min-w-[90%]">
-            <FormControl fullWidth sx={{ minWidth: 120, '& .MuiOutlinedInput-root': {
-  '& fieldset': {
-    borderColor: 'white',
-  },
-  '&:hover fieldset': {
-    borderColor: 'white',
-  },
-  '&.Mui-focused fieldset': {
-    borderColor: 'white',
-  }
-  }}}>
+      <FormControl
+        fullWidth
+        sx={{
+          minWidth: 120,
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white",
+            },
+            "&:hover fieldset": {
+              borderColor: "white",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "white",
+            },
+          },
+        }}
+      >
         <InputLabel
           id="demo-simple-select-label"
           style={{ color: "white", borderStyle: "white" }}
@@ -521,40 +531,95 @@ function QuerySelect({ setQueryChoice, selectedQuery }: BasicSelectProps) {
           label="Query"
           onChange={handleChange}
           sx={{
-            '& .MuiInputBase-inputMultiline': {
-              padding: '16px',
+            "& .MuiInputBase-inputMultiline": {
+              padding: "16px",
             },
-            '& .MuiSelect-icon': {
-              color: 'white',       
-              fontSize: '1.5rem',  
+            "& .MuiSelect-icon": {
+              color: "white",
+              fontSize: "1.5rem",
             },
           }}
         >
-          <MenuItem className={styles.menuListItem} value={"2depthArtist"}>2-Depth: Artist</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"2depthAlbum"}>2-Depth: Album</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"2depthSong"}>2-Depth: Song</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"2depthCity"}>2-Depth: City</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"2depthCountry"}>2-Depth: Country</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"2depthAttraction"}>2-Depth: Attraction</MenuItem>
+          <MenuItem className={styles.menuListItem} value={"2depthArtist"}>
+            2-Depth: Artist
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"2depthAlbum"}>
+            2-Depth: Album
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"2depthSong"}>
+            2-Depth: Song
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"2depthCity"}>
+            2-Depth: City
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"2depthCountry"}>
+            2-Depth: Country
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"2depthAttraction"}>
+            2-Depth: Attraction
+          </MenuItem>
           <hr />
-          <MenuItem className={styles.menuListItem} value={"3depthCountry"}>3-Depth: Country, Cities & Attractions</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"3depthArtist"}>3-Depth: Artist, Albums & Songs</MenuItem>
+          <MenuItem className={styles.menuListItem} value={"3depthCountry"}>
+            3-Depth: Country, Cities & Attractions
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"3depthArtist"}>
+            3-Depth: Artist, Albums & Songs
+          </MenuItem>
           <hr />
-          <MenuItem className={styles.menuListItem} value={"costly"}>Costly</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"nested"}>Nested</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"fragment"}>Fragment</MenuItem>
+          <MenuItem className={styles.menuListItem} value={"costly"}>
+            Costly
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"nested"}>
+            Nested
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"fragment"}>
+            Fragment
+          </MenuItem>
           <hr />
-          <MenuItem className={styles.menuListItem} value={"mutationAddCity"}>Mutation - Add: City</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"mutationAddCountry"}>Mutation - Add: Country</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"mutationAddArtist"}>Mutation - Add: Artist</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"mutationAddAlbum"}>Mutation - Add: Album</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"mutationAddSong"}>Mutation - Add: Song</MenuItem>
+          <MenuItem className={styles.menuListItem} value={"mutationAddCity"}>
+            Mutation - Add: City
+          </MenuItem>
+          <MenuItem
+            className={styles.menuListItem}
+            value={"mutationAddCountry"}
+          >
+            Mutation - Add: Country
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"mutationAddArtist"}>
+            Mutation - Add: Artist
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"mutationAddAlbum"}>
+            Mutation - Add: Album
+          </MenuItem>
+          <MenuItem className={styles.menuListItem} value={"mutationAddSong"}>
+            Mutation - Add: Song
+          </MenuItem>
           <hr />
-          <MenuItem className={styles.menuListItem} value={"mutationDeleteCity"}>Mutation - Delete: City</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"mutationDeleteAlbum"}>Mutation - Delete: Album</MenuItem>
-          <MenuItem className={styles.menuListItem} value={"mutationDeleteArtist"}>Mutation - Delete: Artist</MenuItem>
+          <MenuItem
+            className={styles.menuListItem}
+            value={"mutationDeleteCity"}
+          >
+            Mutation - Delete: City
+          </MenuItem>
+          <MenuItem
+            className={styles.menuListItem}
+            value={"mutationDeleteAlbum"}
+          >
+            Mutation - Delete: Album
+          </MenuItem>
+          <MenuItem
+            className={styles.menuListItem}
+            value={"mutationDeleteArtist"}
+          >
+            Mutation - Delete: Artist
+          </MenuItem>
           <hr />
-          <MenuItem className={styles.menuListItem} value={"mutationEditArtist"}>Mutation - Edit: Artist</MenuItem>
+          <MenuItem
+            className={styles.menuListItem}
+            value={"mutationEditArtist"}
+          >
+            Mutation - Edit: Artist
+          </MenuItem>
         </Select>
       </FormControl>
     </Box>
