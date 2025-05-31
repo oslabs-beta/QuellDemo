@@ -6,7 +6,7 @@ import clipboardGraphic from '/client/src/assets/images/graphics/clipboard.svg';
 export const Hero = () => {
 
   // Store button text
-  const [buttonText, setButtonText] = useState('npm install @quell/client');
+  const [buttonText, setButtonText] = useState('npm install @quell/server');
 
   // Reference button element
   const buttonRef = useRef(null)
