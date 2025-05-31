@@ -22,6 +22,7 @@ export const QueryEditor = ({ setQuery, selectedQuery }: QueryEditorProps) => {
         onChange={handleChange}
         options={{
           scrollBeyondLastLine: true,
+          padding: { top: 20, bottom: 20 },
           wordWrap: 'wordWrapColumn',
         }}
       />

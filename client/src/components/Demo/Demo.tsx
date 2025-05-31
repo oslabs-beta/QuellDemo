@@ -332,8 +332,8 @@ function QueryDemo({
       <div>
         <QueryEditor selectedQuery={selectedQuery} setQuery={setQuery} />
       </div>
-      <h3 className="text-white text-center">See your query results: </h3>
-      <div className="max-h-30 border-1 border-white p-5">
+      <h3 className="text-white text-center text-2xl">See your query results</h3>
+            <div className="max-h-30 border-1 border-white p-5">
         <TextField
           id={styles.queryText}
           multiline={true}
@@ -341,6 +341,11 @@ function QueryDemo({
           InputProps={{ className: styles.queryInput }}
           rows="20"
           value={response}
+          sx={{
+            '& .MuiInputBase-inputMultiline': {
+              padding: '16px', // adjust as needed
+            },
+          }}
         ></TextField>
       </div>
     </div>
@@ -363,8 +368,8 @@ const DemoControls = ({
 }: DemoControls) => {
   return (
     <div className="min-w-full flex flex-col gap-5 text-white items-center">
-      <h3>Select a query to test: </h3>
-      <QuerySelect
+<h3 className="text-white text-center text-2xl">Select a query to test</h3>  
+    <QuerySelect
         setQueryChoice={setQueryChoice}
         selectedQuery={selectedQuery}
       />
@@ -491,7 +496,17 @@ function QuerySelect({ setQueryChoice, selectedQuery }: BasicSelectProps) {
 
   return (
     <Box className="text-center min-w-[90%]">
-      <FormControl fullWidth>
+            <FormControl fullWidth sx={{ minWidth: 120, '& .MuiOutlinedInput-root': {
+  '& fieldset': {
+    borderColor: 'white',
+  },
+  '&:hover fieldset': {
+    borderColor: 'white',
+  },
+  '&.Mui-focused fieldset': {
+    borderColor: 'white',
+  }
+  }}}>
         <InputLabel
           id="demo-simple-select-label"
           style={{ color: "white", borderStyle: "white" }}
@@ -505,6 +520,15 @@ function QuerySelect({ setQueryChoice, selectedQuery }: BasicSelectProps) {
           defaultValue={selectedQuery}
           label="Query"
           onChange={handleChange}
+          sx={{
+            '& .MuiInputBase-inputMultiline': {
+              padding: '16px',
+            },
+            '& .MuiSelect-icon': {
+              color: 'white',       
+              fontSize: '1.5rem',  
+            },
+          }}
         >
           <MenuItem className={styles.menuListItem} value={"2depthArtist"}>2-Depth: Artist</MenuItem>
           <MenuItem className={styles.menuListItem} value={"2depthAlbum"}>2-Depth: Album</MenuItem>
