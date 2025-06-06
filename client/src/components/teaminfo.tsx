@@ -382,8 +382,8 @@ const JUSTINJAEGAR = {
 
 export const TeamArr = [
   ALICIAB,
-  ADITIS,
   JEREMYD,
+  ADITIS,
   ANDREWD,
   STACEYL,
   IANW,
